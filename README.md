@@ -26,6 +26,15 @@ Before you begin, you will need to have the following tools installed on your ma
 [Git](https://git-scm.com), [Node.js](https://nodejs.org/en/) and [MySQL](https://www.mysql.com/).
 In addition, it is good to have an editor to work with the code like [VSCode](https://code.visualstudio.com/)
 
+#### Tuning your database
+
+```bash
+
+Run the script contained within taskease/backend/SQL.sql within your DBMS to create
+the required database, table and columns
+
+```
+
 #### Running the web application (Back-end)
 
 ```bash
