@@ -18,7 +18,6 @@ export const Home = () => {
   };
 
   const filteredTasks: Task[] = tasks.filter((task) => {
-    // Verifica se o nome da tarefa contém o termo de pesquisa
     const taskNameMatch = task.taskName
       .toLowerCase()
       .includes(searchTerm.toLowerCase());

@@ -6,6 +6,7 @@ import { Container } from "../../styles/GlobalStyle";
 import Header from "../../components/Header";
 import { MdPendingActions } from "react-icons/md";
 import { useState } from "react";
+import { priorityTextMap, statusTextMap } from "../../utils/taskUtils";
 
 export const Pending = () => {
   const iconPage = <MdPendingActions />;
@@ -16,9 +17,25 @@ export const Pending = () => {
     setSearchTerm(term);
   };
 
-  const filteredTasks: Task[] = tasks.filter((task) =>
-    task.taskName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredTasks: Task[] = tasks.filter((task) => {
+    const taskNameMatch = task.taskName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const priorityMatch = priorityTextMap[task.priority]
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const statusMatch = statusTextMap[task.status]
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const createdAt = task.createdAt
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return taskNameMatch || priorityMatch || statusMatch || createdAt;
+  });
 
   return (
     <Container>
