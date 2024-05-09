@@ -8,8 +8,10 @@
 ## Features
 
 - [x] Show all tasks in a list with priority levels, status and creation date
+- [x] Overdue and canceled tasks are highlighted in red
+- [x] Tasks with a completed status show the completion date
 - [x] 'Pending' page filtering tasks with only 'not started' and 'in progress' status
-- [x] Search and filter tasks by name
+- [x] Search and filter tasks by name, status, priority and dates.
 - [x] Adding a task and being able to choose the initial priority
 - [x] Feedback on the last 5 tasks added in table format
 - [x] Edit task with the ability to change the name, status and priority fields
