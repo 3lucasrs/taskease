@@ -6,6 +6,7 @@ import { HomeContent } from "./styles";
 import { useState } from "react";
 import Header from "../../components/Header";
 import { MdFormatListBulleted } from "react-icons/md";
+import { priorityTextMap, statusTextMap } from "../../utils/taskUtils";
 
 export const Home = () => {
   const { tasks, filterTasksByStatusId } = useTaskContext();
@@ -16,9 +17,26 @@ export const Home = () => {
     setSearchTerm(term);
   };
 
-  const filteredTasks: Task[] = tasks.filter((task) =>
-    task.taskName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredTasks: Task[] = tasks.filter((task) => {
+    // Verifica se o nome da tarefa contém o termo de pesquisa
+    const taskNameMatch = task.taskName
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const priorityMatch = priorityTextMap[task.priority]
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const statusMatch = statusTextMap[task.status]
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    const createdAt = task.createdAt
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+
+    return taskNameMatch || priorityMatch || statusMatch || createdAt;
+  });
 
   return (
     <Container>
