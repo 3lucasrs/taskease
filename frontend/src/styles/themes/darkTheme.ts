@@ -12,6 +12,7 @@ export const darkTheme = {
   green: "#47A785",
   blue: "#5395CF",
   yellow: "#EFB047",
+  yellow2: "rgba(255, 255, 150, 0.3)",
   salmon: "#F9837C",
 
   // TEXTOS
