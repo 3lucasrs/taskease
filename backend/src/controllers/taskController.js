@@ -12,12 +12,21 @@ const all = async (req, res) => {
 
 const add = async (req, res) => {
   try {
-    if (req.body.taskName && req.body.priority && req.body.status) {
+    if (
+      req.body.taskName &&
+      req.body.createdAt &&
+      req.body.priority &&
+      req.body.status &&
+      req.body.dueDate
+    ) {
       const newTask = await Task.create({
         taskName: req.body.taskName,
-        createdAt: new Date(),
+        createdAt: req.body.createdAt,
         priority: req.body.priority,
         status: req.body.status,
+        dueDate: req.body.dueDate,
+        finishDate:
+          req.body.finishDate !== null ? req.body.finishDate : undefined,
       });
       res.status(201).json({ item: newTask });
     } else {
@@ -48,6 +57,20 @@ const update = async (req, res) => {
 
     if (req.body.status) {
       task.status = req.body.status;
+    }
+
+    if (req.body.dueDate) {
+      task.dueDate = req.body.dueDate;
+    }
+
+    if (
+      req.body.finishDate !== undefined &&
+      req.body.finishDate !== null &&
+      req.body.finishDate !== ""
+    ) {
+      task.finishDate = req.body.finishDate;
+    } else {
+      task.finishDate = null;
     }
 
     await task.save();

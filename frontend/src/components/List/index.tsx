@@ -1,3 +1,4 @@
+import React from "react";
 import { Task } from "../../context/TaskProvider";
 import { useEffect, useRef, useState } from "react";
 import {
@@ -5,6 +6,8 @@ import {
   getDate,
   getPriority,
   getStatusText,
+  getTimeUntilDue,
+  isTaskWarning,
 } from "../../utils/taskUtils";
 import {
   DateCell,
@@ -58,17 +61,36 @@ const List = ({ title, list }: ListProps) => {
           <thead>
             <tr>
               <TableHeader>Tarefa</TableHeader>
-              <TableHeader>Data</TableHeader>
+              <TableHeader>Data de Criação</TableHeader>
+              <TableHeader>Data de Vencimento</TableHeader>
+              <TableHeader>Data de Conclusão</TableHeader>
               <TableHeader>Status</TableHeader>
               <TableHeader>Prioridade</TableHeader>
             </tr>
           </thead>
           <tbody>
             {list.map((task) => (
-              <TableRow key={task.id}>
+              <TableRow
+                key={task.id}
+                overdue={isTaskWarning(task.dueDate, task.status).toString()}
+              >
                 <TaskCell>{task.taskName}</TaskCell>
-                <DateCell title={getDate(task.createdAt)}>
-                  {getCompressedDate(task.createdAt)}
+
+                <DateCell
+                  title={task.createdAt ? getDate(task.createdAt) : "-"}
+                >
+                  {task.createdAt ? getCompressedDate(task.createdAt) : "-"}
+                </DateCell>
+
+                <DateCell title={task.dueDate ? getDate(task.dueDate) : "-"}>
+                  {task.dueDate
+                    ? getTimeUntilDue(task.dueDate, task.status)
+                    : "-"}
+                </DateCell>
+                <DateCell
+                  title={task.finishDate ? getDate(task.finishDate) : "-"}
+                >
+                  {task.finishDate ? getCompressedDate(task.finishDate) : "-"}
                 </DateCell>
                 <StatusCell>{getStatusText(task.status)}</StatusCell>
                 <PriorityCell>{getPriority(task.priority)}</PriorityCell>

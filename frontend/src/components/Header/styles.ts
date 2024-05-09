@@ -36,3 +36,33 @@ export const HeaderTitle = styled.div`
   font-size: 24px;
   font-weight: 500;
 `;
+
+export const FilterButton = styled.button`
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
+export const Dropdown = styled.div`
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+`;
+
+export const DropdownItem = styled.div`
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+`;

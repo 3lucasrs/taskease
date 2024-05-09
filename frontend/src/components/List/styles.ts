@@ -55,30 +55,40 @@ export const TableHeader = styled.th`
   }
 `;
 
-export const TableRow = styled.tr`
+interface TableRowProps {
+  overdue?: string;
+}
+
+export const TableRow = styled.tr<TableRowProps>`
+  height: 50px;
+  color: ${(props) =>
+    props.overdue === "true" ? props.theme.salmon : "inherit"};
+
   &:nth-child(even) {
+    color: ${(props) =>
+      props.overdue === "true" ? props.theme.salmon : "inherit"};
     background-color: ${(props) => props.theme.gray3};
   }
 `;
 
 export const TaskCell = styled.td`
-  width: 50%;
-  padding: 8px;
+  width: 35%;
+  padding: 5px;
 `;
 
 export const DateCell = styled.td`
-  width: 20%;
-  padding: 8px;
+  width: 15%;
+  padding: 5px;
 `;
 
 export const StatusCell = styled.td`
-  width: 20%;
-  padding: 8px;
+  width: 10%;
+  padding: 5px;
 `;
 
 export const PriorityCell = styled.td`
   width: 10%;
-  padding: 8px;
+  padding: 5px;
 `;
 
 export const Priority = styled.div`

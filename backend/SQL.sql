@@ -8,5 +8,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
   `createdAt` DATETIME NOT NULL,
   `priority` INT NOT NULL CHECK (`priority` BETWEEN 1 AND 4),
   `status` INT NOT NULL CHECK (`status` BETWEEN 1 AND 4),
+  `dueDate` datetime NOT NULL,
+  `finishDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 );

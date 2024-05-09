@@ -14,7 +14,6 @@ const Task = sequelize.define(
     },
     createdAt: {
       type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
     },
     priority: {
       type: DataTypes.INTEGER,
@@ -31,6 +30,14 @@ const Task = sequelize.define(
         min: 1,
         max: 4,
       },
+    },
+    dueDate: {
+      type: DataTypes.DATE,
+    },
+    finishDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+      defaultValue: null,
     },
   },
   {

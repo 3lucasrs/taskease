@@ -1,3 +1,4 @@
+import React from "react";
 import Header from "../../components/Header";
 import {
   Button,
@@ -17,6 +18,7 @@ import { Container, ErrorMessage } from "../../styles/GlobalStyle";
 import { MdFormatListBulletedAdd } from "react-icons/md";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { isValidDueTime } from "../../utils/taskUtils";
 
 const AddTask = () => {
   const { addTask, filterByLatestAdded } = useTaskContext();
@@ -29,10 +31,14 @@ const AddTask = () => {
       .number()
       .int()
       .min(1, "Por favor selecione uma prioridade válida!")
-      .max(4, "Por favor selecione uma prioridade válida!"), // coerce converte string para number
+      .max(4, "Por favor selecione uma prioridade válida!"),
+    dueDate: z.string().refine(isValidDueTime, {
+      message:
+        "Por favor, insira uma data e hora no formato válido e que seja posterior à data atual",
+    }),
   });
 
-  type AddTaskSchema = z.infer<typeof addTaskSchema>; // zod integrado ao typescript
+  type AddTaskSchema = z.infer<typeof addTaskSchema>;
 
   const {
     register,
@@ -44,20 +50,25 @@ const AddTask = () => {
   });
 
   const handleAddTaskSubmit = (data: AddTaskSchema) => {
-    if (!errors.taskName && !errors.priority) {
+    if (!errors.taskName && !errors.priority && !errors.dueDate) {
       const newTask: Task = {
         taskName: data.taskName,
-
+        createdAt: new Date().toISOString(),
         status: 1,
         priority: data.priority,
+        dueDate: data.dueDate,
+        finishDate: null,
       };
 
       addTask(newTask);
+      console.log(newTask);
+
       reset();
     }
   };
 
   const icon = <MdFormatListBulletedAdd />;
+
   return (
     <Container>
       <Header icon={icon} title="Adicionar tarefa"></Header>
@@ -93,18 +104,15 @@ const AddTask = () => {
           </FormRow>
           <FormRow>
             <LabelComponent>
-              <Label htmlFor="dueDate">Data de abertura</Label>
+              <Label htmlFor="dueDate">Data de vencimento</Label>
               <Input
-                type="date"
+                {...register("dueDate")}
+                type="datetime-local"
                 id="dueDate"
-                value={new Date().toISOString().slice(0, 10)}
-                disabled
               />
-            </LabelComponent>
-
-            <LabelComponent>
-              <Label htmlFor="completionDate">Data de vencimento</Label>
-              <Input type="date" id="completionDate" disabled />
+              {errors.dueDate && (
+                <ErrorMessage>{errors.dueDate.message}</ErrorMessage>
+              )}
             </LabelComponent>
           </FormRow>
           <Button type="submit">Adicionar</Button>

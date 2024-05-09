@@ -6,9 +6,11 @@ const BASE_URL = "http://localhost:3001";
 export interface Task {
   id?: number;
   taskName: string;
-  createdAt?: string;
+  createdAt: string;
   priority: number;
   status: number;
+  dueDate: string;
+  finishDate?: string | null;
 }
 
 interface TaskContextType {
@@ -62,6 +64,7 @@ export const TaskProvider = ({ children }: TaskProviderProps) => {
     } catch (error) {
       setError("Erro ao adicionar tarefa");
     }
+    console.log(task);
   };
 
   const updateTask = async (task: Task) => {

@@ -68,9 +68,17 @@ const TaskModifier = () => {
 
   const handleSaveTask = (data: Task) => {
     if (!selectedTask) return;
-    updateTask({ ...selectedTask, ...data });
+    const updatedTask = { ...selectedTask, ...data };
+
+    if (data.status === 3) {
+      updatedTask.finishDate = new Date().toISOString();
+    } else {
+      updatedTask.finishDate = null;
+    }
+
+    updateTask(updatedTask);
     setBeforeModifiedTask([selectedTask]);
-    setAfterModifiedTask([{ ...selectedTask, ...data }]);
+    setAfterModifiedTask([updatedTask]);
     setSelectedTask(null);
     setTaskData(null);
   };
